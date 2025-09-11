@@ -1,0 +1,15 @@
+FROM node:lts-alpine
+
+RUN apk add --no-cache openssl bash curl unzip
+
+RUN curl -fsSL https://bun.sh/install | bash
+
+ENV PATH="/root/.bun/bin:$PATH"
+
+WORKDIR /app
+
+COPY package.json bun.lock src ./
+
+RUN bun install
+
+COPY . .
