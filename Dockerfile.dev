@@ -8,7 +8,7 @@ ENV PATH="/root/.bun/bin:$PATH"
 
 WORKDIR /app
 
-COPY package.json bun.lock src ./
+COPY package.json bun.lock ./
 
 RUN bun install
 

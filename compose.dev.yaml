@@ -1,0 +1,23 @@
+services:
+  api:
+    container_name: api-dev
+    command: bash -c "bun generate && bun start:dev"
+    env_file: .env.development
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - "./:/app"
+    ports:
+      - "${PORT}:${PORT}"
+  db:
+    image: postgres
+    container_name: db-dev 
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "${DB_PORT}:${DB_PORT}"

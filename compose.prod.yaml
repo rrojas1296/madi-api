@@ -1,0 +1,21 @@
+services:
+  api:
+    container_name: api-prod
+    env_file: .env
+    command: bash -c "node dist/main.js"
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "${PORT}:${PORT}"
+  db:
+    image: postgres
+    container_name: db-prod
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - POSTGRES_DB=${DB_NAME}
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
