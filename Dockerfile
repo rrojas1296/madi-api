@@ -38,3 +38,7 @@ COPY prisma ./prisma
 COPY prisma.config.ts .
 
 RUN bun run generate
+
+EXPOSE 80
+
+CMD ["node", "dist/main.js"]
