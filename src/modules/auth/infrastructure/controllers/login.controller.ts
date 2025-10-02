@@ -15,13 +15,13 @@ export class LoginController {
     const tokens = await this._loginUserUseCase.execute(data);
     const cookieBaseConfig: CookieOptions = {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
     };
     res.cookie('accessToken', tokens.accessToken, {
       ...cookieBaseConfig,
-      maxAge: 1000 * 10,
+      maxAge: 1000 * 10 * 60 * 60,
     });
     res.cookie('refreshToken', tokens.refreshToken, {
       ...cookieBaseConfig,

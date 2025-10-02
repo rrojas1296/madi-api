@@ -1,7 +1,7 @@
 import { Body, Controller, HttpStatus, Param, Post, Res } from '@nestjs/common';
 import { RegisterUserUseCase } from '../../application/use-cases/registerUser.useCase';
 import { RegisterUserDto } from '../../application/dtos/registerUser.dto';
-import { type Response } from 'express';
+import { CookieOptions, type Response } from 'express';
 import { ValidateEmailUseCase } from '../../application/use-cases/validateRegisterEmail.useCase';
 
 @Controller('register')
@@ -25,17 +25,19 @@ export class RegisterController {
     const { accessToken, refreshToken } =
       await this._registerUserUC.execute(data);
 
-    res.cookie('accessToken', accessToken, {
+    const cookieBaseConfig: CookieOptions = {
       httpOnly: true,
-      path: '/',
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
+      path: '/',
+    };
+    res.cookie('accessToken', accessToken, {
+      ...cookieBaseConfig,
+      maxAge: 1000 * 10 * 60 * 60,
     });
     res.cookie('refreshToken', refreshToken, {
-      httpOnly: true,
-      path: '/',
-      secure: true,
-      sameSite: 'lax',
+      ...cookieBaseConfig,
+      maxAge: 1000 * 60 * 60 * 24 * 365,
     });
     return res
       .json({

@@ -21,7 +21,7 @@ export class AuthController {
   signOut(@Res() res: Response) {
     const cookieBaseConfig: CookieOptions = {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === 'production',
       sameSite: 'lax',
       path: '/',
     };
