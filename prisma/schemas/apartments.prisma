@@ -1,0 +1,39 @@
+enum ApartmentStatus {
+  AVAILABLE
+  LEASED
+  MAINTENANCE
+}
+
+enum ApartmentCurrencies {
+  PEN
+  USD
+  EUR
+}
+
+enum ApartmentCondition {
+  GOOD
+  MAINTENANCE
+  REMODELATED
+}
+
+model Apartments {
+  id             String              @id @default(uuid())
+  name           String
+  code           String
+  address        String
+  floor          Int 
+  area           Float 
+  status         ApartmentStatus
+  parking        String?
+  persons        Int
+  rooms          Int
+  bathrooms      Int
+  floors         Int
+  condition      ApartmentCondition
+  furnished      Boolean             @default(false)
+  pets           Boolean             @default(false)
+  monthlyFee     Float
+  garanty        Float
+  currency       ApartmentCurrencies
+  maintenanceFee Float
+}
