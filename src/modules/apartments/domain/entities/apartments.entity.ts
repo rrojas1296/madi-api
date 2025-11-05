@@ -5,7 +5,7 @@ import {
 } from '@prisma/client';
 
 interface Props {
-  id: string;
+  id?: string;
   name: string;
   code: string;
   address: string;
@@ -26,7 +26,7 @@ interface Props {
   maintenanceFee: number;
 }
 export class ApartmentsEntity {
-  id: string;
+  id?: string;
   name: string;
   code: string;
   address: string;

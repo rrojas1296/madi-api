@@ -9,7 +9,7 @@ export class ApartmentsController {
   ) {}
   @Post()
   async createApartment(@Body() data: CreateApartmentDto) {
-    this._createApartmentUseCase.execute(data);
-    return { message: 'Apartment created successfully' };
+    const id = await this._createApartmentUseCase.execute(data);
+    return { message: 'Apartment created successfully', id };
   }
 }

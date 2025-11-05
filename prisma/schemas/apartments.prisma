@@ -21,8 +21,8 @@ model Apartments {
   name           String
   code           String
   address        String
-  floor          Int 
-  area           Float 
+  floor          Int
+  area           Decimal             @db.Decimal(10, 2)
   status         ApartmentStatus
   parking        String?
   persons        Int
@@ -32,8 +32,8 @@ model Apartments {
   condition      ApartmentCondition
   furnished      Boolean             @default(false)
   pets           Boolean             @default(false)
-  monthlyFee     Float
-  garanty        Float
+  monthlyFee     Decimal             @db.Decimal(10, 2)
+  garanty        Decimal             @db.Decimal(10, 2)
   currency       ApartmentCurrencies
-  maintenanceFee Float
+  maintenanceFee Decimal             @db.Decimal(10, 2)
 }

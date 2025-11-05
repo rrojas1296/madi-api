@@ -10,6 +10,7 @@
     "build:docker": "docker compose -f compose.prod.yaml --env-file .env up",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "generate": "prisma generate",
+    "migrate": "prisma migrate dev",
     "start": "nest start",
     "start:dev": "nest start --watch",
     "start:docker:dev": "docker compose -f compose.dev.yaml --env-file .env.development up",

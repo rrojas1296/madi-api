@@ -1,4 +1,19 @@
-import { IsString } from 'class-validator';
+import {
+  ApartmentCondition,
+  ApartmentCurrencies,
+  ApartmentStatus,
+} from '@prisma/client';
+import { Type } from 'class-transformer';
+import {
+  IsString,
+  IsInt,
+  IsNumber,
+  IsEnum,
+  IsBoolean,
+  IsOptional,
+  IsPositive,
+  Min,
+} from 'class-validator';
 
 export class CreateApartmentDto {
   @IsString()
@@ -10,6 +25,69 @@ export class CreateApartmentDto {
   @IsString()
   address: string;
 
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  floor: number;
+
+  @Type(() => Number)
+  @IsNumber()
+  @IsPositive()
+  area: number;
+
+  @IsEnum(ApartmentStatus)
+  status: ApartmentStatus;
+
+  @IsOptional()
   @IsString()
-  floor: string;
+  parking?: string;
+
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  persons: number;
+
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  rooms: number;
+
+  @Type(() => Number)
+  @IsInt()
+  @Min(0)
+  bathrooms: number;
+
+  @Type(() => Number)
+  @IsInt()
+  @Min(1)
+  floors: number;
+
+  @IsEnum(ApartmentCondition)
+  condition: ApartmentCondition;
+
+  @IsBoolean()
+  @Type(() => Boolean)
+  furnished: boolean;
+
+  @IsBoolean()
+  @Type(() => Boolean)
+  pets: boolean;
+
+  @Type(() => Number)
+  @IsNumber()
+  @Min(0)
+  monthlyFee: number;
+
+  @Type(() => Number)
+  @IsNumber()
+  @Min(0)
+  garanty: number;
+
+  @IsEnum(ApartmentCurrencies)
+  currency: ApartmentCurrencies;
+
+  @Type(() => Number)
+  @IsNumber()
+  @Min(0)
+  maintenanceFee: number;
 }
