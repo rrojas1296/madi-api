@@ -11,15 +11,15 @@ enum ApartmentCurrencies {
 }
 
 enum ApartmentCondition {
-  GOOD
+  NEW
+  REMODELED
   MAINTENANCE
-  REMODELATED
 }
 
 model Apartments {
   id             String              @id @default(uuid())
   name           String
-  code           String
+  internalCode   String
   address        String
   floor          Int
   area           Decimal             @db.Decimal(10, 2)

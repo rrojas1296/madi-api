@@ -7,7 +7,7 @@ import {
 interface Props {
   id?: string;
   name: string;
-  code: string;
+  internalCode: string;
   address: string;
   floor: number;
   area: number;
@@ -28,7 +28,7 @@ interface Props {
 export class ApartmentsEntity {
   id?: string;
   name: string;
-  code: string;
+  internalCode: string;
   address: string;
   floor: number;
   area: number;
@@ -49,7 +49,7 @@ export class ApartmentsEntity {
   constructor({
     id,
     name,
-    code,
+    internalCode,
     address,
     floor,
     area,
@@ -69,7 +69,7 @@ export class ApartmentsEntity {
   }: Props) {
     this.id = id;
     this.name = name;
-    this.code = code;
+    this.internalCode = internalCode;
     this.address = address;
     this.floor = floor;
     this.area = area;

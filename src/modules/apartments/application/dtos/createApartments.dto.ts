@@ -20,7 +20,7 @@ export class CreateApartmentDto {
   name: string;
 
   @IsString()
-  code: string;
+  internalCode: string;
 
   @IsString()
   address: string;

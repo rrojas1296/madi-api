@@ -9,7 +9,7 @@ export class CreateApartmentUseCase {
   execute(data: CreateApartmentDto) {
     const {
       name,
-      code,
+      internalCode,
       floor,
       address,
       area,
@@ -29,7 +29,7 @@ export class CreateApartmentUseCase {
     } = data;
     const d = new ApartmentsEntity({
       name,
-      code,
+      internalCode,
       floor,
       address,
       area,
