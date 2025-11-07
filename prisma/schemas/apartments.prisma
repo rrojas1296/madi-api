@@ -35,5 +35,5 @@ model Apartments {
   monthlyFee     Decimal             @db.Decimal(10, 2)
   garanty        Decimal             @db.Decimal(10, 2)
   currency       ApartmentCurrencies
-  maintenanceFee Decimal             @db.Decimal(10, 2)
+  maintenanceFee Decimal?             @db.Decimal(10, 2)
 }

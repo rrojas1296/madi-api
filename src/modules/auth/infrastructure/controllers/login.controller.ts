@@ -34,7 +34,6 @@ export class LoginController {
 
   @Post('validateEmail/:email')
   async validateEmail(@Param('email') email: string) {
-    console.log({ email });
     await this._validateLoginEmail.execute(email);
     return {
       message: 'Email is registered',

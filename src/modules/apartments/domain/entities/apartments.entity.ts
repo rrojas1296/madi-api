@@ -23,7 +23,7 @@ interface Props {
   monthlyFee: number;
   garanty: number;
   currency: ApartmentCurrencies;
-  maintenanceFee: number;
+  maintenanceFee?: number;
 }
 export class ApartmentsEntity {
   id?: string;
@@ -44,7 +44,7 @@ export class ApartmentsEntity {
   monthlyFee: number;
   garanty: number;
   currency: ApartmentCurrencies;
-  maintenanceFee: number;
+  maintenanceFee?: number;
 
   constructor({
     id,

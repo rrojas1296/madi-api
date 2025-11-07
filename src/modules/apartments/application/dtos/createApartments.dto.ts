@@ -89,5 +89,6 @@ export class CreateApartmentDto {
   @Type(() => Number)
   @IsNumber()
   @Min(0)
-  maintenanceFee: number;
+  @IsOptional()
+  maintenanceFee?: number;
 }
