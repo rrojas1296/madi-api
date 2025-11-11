@@ -3,10 +3,15 @@ import { ApartmentsController } from './infrastructure/controllers/apartments.co
 import { CreateApartmentUseCase } from './application/use-cases/createApartment.useCase';
 import { ApartmentsRepository } from './domain/apartments.repository';
 import { PrismaModule } from 'src/infrastructure/prisma/prisma.module';
+import { GetApartmentsTableUseCase } from './application/use-cases/getApartmentsTable.useCase';
 
 @Module({
   controllers: [ApartmentsController],
-  providers: [CreateApartmentUseCase, ApartmentsRepository],
+  providers: [
+    CreateApartmentUseCase,
+    GetApartmentsTableUseCase,
+    ApartmentsRepository,
+  ],
   imports: [PrismaModule],
 })
 export class ApartmentsModule {}

@@ -26,7 +26,7 @@ export class CreateApartmentDto {
   address: string;
 
   @Type(() => Number)
-  @IsInt()
+  @IsNumber()
   @Min(0)
   floor: number;
 
@@ -43,22 +43,23 @@ export class CreateApartmentDto {
   parking?: string;
 
   @Type(() => Number)
-  @IsInt()
+  @IsNumber()
   @Min(1)
   persons: number;
 
   @Type(() => Number)
-  @IsInt()
+  @IsNumber()
   @Min(0)
   rooms: number;
 
   @Type(() => Number)
-  @IsInt()
+  @IsNumber()
+  @Min(0)
   @Min(0)
   bathrooms: number;
 
   @Type(() => Number)
-  @IsInt()
+  @IsNumber()
   @Min(1)
   floors: number;
 

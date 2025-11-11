@@ -3,6 +3,7 @@ import {
   ApartmentCurrencies,
   ApartmentStatus,
 } from '@prisma/client';
+import { Decimal } from '@prisma/client/runtime/library';
 
 interface Props {
   id?: string;
@@ -10,9 +11,9 @@ interface Props {
   internalCode: string;
   address: string;
   floor: number;
-  area: number;
+  area: number | Decimal;
   status: ApartmentStatus;
-  parking?: string;
+  parking?: string | null;
   persons: number;
   rooms: number;
   bathrooms: number;
@@ -20,10 +21,10 @@ interface Props {
   condition: ApartmentCondition;
   furnished: boolean;
   pets: boolean;
-  monthlyFee: number;
-  garanty: number;
+  monthlyFee: number | Decimal;
+  garanty: number | Decimal;
   currency: ApartmentCurrencies;
-  maintenanceFee?: number;
+  maintenanceFee?: number | null | Decimal;
 }
 export class ApartmentsEntity {
   id?: string;
@@ -31,9 +32,9 @@ export class ApartmentsEntity {
   internalCode: string;
   address: string;
   floor: number;
-  area: number;
+  area: number | Decimal;
   status: ApartmentStatus;
-  parking?: string;
+  parking?: string | null;
   persons: number;
   rooms: number;
   bathrooms: number;
@@ -41,10 +42,10 @@ export class ApartmentsEntity {
   condition: ApartmentCondition;
   furnished: boolean;
   pets: boolean;
-  monthlyFee: number;
-  garanty: number;
+  monthlyFee: number | Decimal;
+  garanty: number | Decimal;
   currency: ApartmentCurrencies;
-  maintenanceFee?: number;
+  maintenanceFee?: number | null | Decimal;
 
   constructor({
     id,
