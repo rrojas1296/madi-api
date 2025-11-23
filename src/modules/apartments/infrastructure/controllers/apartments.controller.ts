@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Post, Query } from '@nestjs/common';
 import { CreateApartmentDto } from '../../application/dtos/createApartments.dto';
 import { CreateApartmentUseCase } from '../../application/use-cases/createApartment.useCase';
-import { sleep } from 'src/utils/sleep';
 import { GetApartmentsTableUseCase } from '../../application/use-cases/getApartmentsTable.useCase';
+import { FiltersDataTableDto } from '../../application/dtos/filtersDataTable.dto';
+import { sleep } from 'src/utils/sleep';
 
 @Controller('/apartments')
 export class ApartmentsController {
@@ -12,16 +13,40 @@ export class ApartmentsController {
   ) {}
   @Post()
   async createApartment(@Body() data: CreateApartmentDto) {
-    await sleep(3000);
     const id = await this._createApartmentUseCase.execute(data);
     return { message: 'Apartment created successfully', id };
   }
 
-  @Get('/table')
-  async getApartmentsTable() {
-    await sleep(1000);
-    const data = await this._getApartmentsTableUseCase.execute();
-    console.log({ data });
+  @Post('/table')
+  async getApartmentsTable(
+    @Query('status') status: string,
+    @Query('currency') currency: string,
+    @Query('monthlyFeeMin') monthlyFeeMin: string,
+    @Query('monthlyFeeMax') monthlyFeeMax: string,
+    @Query('roomsMin') roomsMin: string,
+    @Query('roomsMax') roomsMax: string,
+    @Query('areaMin') areaMin: string,
+    @Query('areaMax') areaMax: string,
+    @Query('pets') pets: string,
+    @Query('furnished') furnished: string,
+    @Body() body: { searchText: string },
+  ) {
+    const filters: FiltersDataTableDto = {
+      status,
+      currency,
+      monthlyFeeMin,
+      monthlyFeeMax,
+      roomsMin,
+      roomsMax,
+      areaMin,
+      areaMax,
+      pets,
+      furnished,
+    };
+    const data = await this._getApartmentsTableUseCase.execute(
+      body.searchText,
+      filters,
+    );
     return { message: 'Data obtained successfully', data };
   }
 }

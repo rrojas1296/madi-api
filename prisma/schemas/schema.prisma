@@ -1,8 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+//******** AUTO GENERATED FILE, DO NOT EDIT.  *********
 
 generator client {
   provider = "prisma-client-js"
@@ -11,4 +7,64 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+}
+
+
+enum ApartmentStatus {
+  AVAILABLE
+  LEASED
+  MAINTENANCE
+}
+
+enum ApartmentCurrencies {
+  PEN
+  USD
+  EUR
+}
+
+enum ApartmentCondition {
+  NEW
+  REMODELED
+  MAINTENANCE
+}
+
+model Apartments {
+  id             String              @id @default(uuid())
+  name           String
+  internalCode   String
+  address        String
+  floor          Int
+  area           Decimal             @db.Decimal(10, 2)
+  status         ApartmentStatus
+  parking        String?
+  persons        Int
+  rooms          Int
+  bathrooms      Int
+  floors         Int
+  condition      ApartmentCondition
+  furnished      Boolean             @default(false)
+  pets           Boolean             @default(false)
+  monthlyFee     Decimal             @db.Decimal(10, 2)
+  garanty        Decimal             @db.Decimal(10, 2)
+  currency       ApartmentCurrencies
+  maintenanceFee Decimal?            @db.Decimal(10, 2)
+  createdAt      DateTime            @default(now())
+  updatedAt      DateTime            @updatedAt
+}
+
+
+model Tenant {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+
+model Users {
+  id        String  @id @default(uuid())
+  password  String
+  email     String  @unique
+  firstName String?
+  lastName  String?
 }

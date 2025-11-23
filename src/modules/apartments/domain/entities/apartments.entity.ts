@@ -25,6 +25,8 @@ interface Props {
   garanty: number | Decimal;
   currency: ApartmentCurrencies;
   maintenanceFee?: number | null | Decimal;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
 }
 export class ApartmentsEntity {
   id?: string;
@@ -46,6 +48,8 @@ export class ApartmentsEntity {
   garanty: number | Decimal;
   currency: ApartmentCurrencies;
   maintenanceFee?: number | null | Decimal;
+  createdAt?: Date | string;
+  updatedAt?: Date | string;
 
   constructor({
     id,
@@ -67,6 +71,8 @@ export class ApartmentsEntity {
     garanty,
     currency,
     maintenanceFee,
+    createdAt,
+    updatedAt,
   }: Props) {
     this.id = id;
     this.name = name;
@@ -87,5 +93,7 @@ export class ApartmentsEntity {
     this.garanty = garanty;
     this.currency = currency;
     this.maintenanceFee = maintenanceFee;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
   }
 }
