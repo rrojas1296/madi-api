@@ -3,7 +3,7 @@ import { CreateApartmentDto } from '../../application/dtos/createApartments.dto'
 import { CreateApartmentUseCase } from '../../application/use-cases/createApartment.useCase';
 import { GetApartmentsTableUseCase } from '../../application/use-cases/getApartmentsTable.useCase';
 import { FiltersDataTableDto } from '../../application/dtos/filtersDataTable.dto';
-import { sleep } from 'src/utils/sleep';
+import { GetApartmentsTableDto } from '../../application/dtos/getApartmentsTable.dto';
 
 @Controller('/apartments')
 export class ApartmentsController {
@@ -29,7 +29,7 @@ export class ApartmentsController {
     @Query('areaMax') areaMax: string,
     @Query('pets') pets: string,
     @Query('furnished') furnished: string,
-    @Body() body: { searchText: string },
+    @Body() body: GetApartmentsTableDto,
   ) {
     const filters: FiltersDataTableDto = {
       status,
@@ -43,10 +43,7 @@ export class ApartmentsController {
       pets,
       furnished,
     };
-    const data = await this._getApartmentsTableUseCase.execute(
-      body.searchText,
-      filters,
-    );
+    const data = await this._getApartmentsTableUseCase.execute(body, filters);
     return { message: 'Data obtained successfully', data };
   }
 }

@@ -5,6 +5,7 @@ import { IApartmentsRepository } from './interfaces/apartmentsRepository.interfa
 import { Apartments } from '@prisma/client';
 import { KnexService } from 'src/infrastructure/knex/knex.service';
 import { FiltersDataTableDto } from '../application/dtos/filtersDataTable.dto';
+import { GetApartmentsTableDto } from '../application/dtos/getApartmentsTable.dto';
 
 @Injectable()
 export class ApartmentsRepository implements IApartmentsRepository {
@@ -26,7 +27,10 @@ export class ApartmentsRepository implements IApartmentsRepository {
     return data.map((i) => this.serialize(i));
   }
 
-  async getDataTable(searchText: string, filters: FiltersDataTableDto) {
+  async getDataTable(
+    data: GetApartmentsTableDto,
+    filters: FiltersDataTableDto,
+  ) {
     const {
       monthlyFeeMax,
       monthlyFeeMin,
@@ -39,17 +43,21 @@ export class ApartmentsRepository implements IApartmentsRepository {
       pets,
       furnished,
     } = filters;
+
+    const { page, limit, search } = data;
+    const offset = (page - 1) * limit;
     const { total } = await this._knexService.client
       .from('Apartments')
       .count('* as total')
       .first();
 
+    const pages = Math.ceil(total / limit);
+
     const apartments: ApartmentsEntity[] = await this._knexService.client
       .select('*')
       .from('Apartments as ap')
       .modify((qb) => {
-        if (searchText)
-          qb.whereRaw('TRIM(ap.name) ILIKE ?', [`%${searchText}%`]);
+        if (search) qb.whereRaw('TRIM(ap.name) ILIKE ?', [`%${search}%`]);
         if (monthlyFeeMin) qb.where('ap.monthlyFee', '>=', monthlyFeeMin);
         if (monthlyFeeMax) qb.andWhere('ap.monthlyFee', '<=', monthlyFeeMax);
 
@@ -73,8 +81,10 @@ export class ApartmentsRepository implements IApartmentsRepository {
             furnished.split(',').map((i) => i === 'true'),
           );
       })
-      .orderBy('ap.createdAt', 'desc');
-    return { apartments, total };
+      .orderBy('ap.createdAt', 'desc')
+      .offset(offset)
+      .limit(limit);
+    return { apartments, total, pages };
   }
 
   private serialize(data: Apartments): ApartmentsEntity {
