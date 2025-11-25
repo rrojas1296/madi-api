@@ -7,5 +7,10 @@ export interface IApartmentsRepository {
   getDataTable(
     data: GetApartmentsTableDto,
     filters: FiltersDataTableDto,
-  ): Promise<{ apartments: ApartmentsEntity[]; total: number }>;
+  ): Promise<{
+    apartments: ApartmentsEntity[];
+    totalRequest: number;
+    pages: number;
+    total: number;
+  }>;
 }

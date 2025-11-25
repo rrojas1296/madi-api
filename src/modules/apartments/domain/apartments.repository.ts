@@ -18,12 +18,14 @@ export class ApartmentsRepository implements IApartmentsRepository {
     const apartment = await this._prismaService.apartments.create({
       data,
     });
+    this._knexService.client.insert(data).into('Apartments');
     return apartment.id;
   }
 
   async get(): Promise<ApartmentsEntity[]> {
-    const data = await this._prismaService.apartments.findMany();
-    console.log({ data });
+    const data: Apartments[] = await this._knexService
+      .client('Apartments as ap')
+      .select('*');
     return data.map((i) => this.serialize(i));
   }
 
@@ -46,14 +48,12 @@ export class ApartmentsRepository implements IApartmentsRepository {
 
     const { page, limit, search } = data;
     const offset = (page - 1) * limit;
-    const { total } = await this._knexService.client
+    const totalQuery = this._knexService.client
       .from('Apartments')
       .count('* as total')
-      .first();
+      .first() as Promise<{ total: string }>;
 
-    const pages = Math.ceil(total / limit);
-
-    const apartments: ApartmentsEntity[] = await this._knexService.client
+    const baseQuery = this._knexService.client
       .select('*')
       .from('Apartments as ap')
       .modify((qb) => {
@@ -81,10 +81,30 @@ export class ApartmentsRepository implements IApartmentsRepository {
             furnished.split(',').map((i) => i === 'true'),
           );
       })
-      .orderBy('ap.createdAt', 'desc')
+      .orderBy('ap.createdAt', 'desc');
+    const paginationQuery = baseQuery
+      .clone()
       .offset(offset)
-      .limit(limit);
-    return { apartments, total, pages };
+      .limit(limit) as Promise<Apartments[]>;
+    const pagesQuery = baseQuery
+      .clone()
+      .clearSelect()
+      .clearOrder()
+      .count('* as count')
+      .first() as Promise<{ count: string }>;
+
+    const [apartments, { total }, { count }] = await Promise.all([
+      paginationQuery,
+      totalQuery,
+      pagesQuery,
+    ]);
+    const serializedData = apartments.map((a) => this.serialize(a));
+    return {
+      apartments: serializedData,
+      total: parseInt(total),
+      totalRequest: apartments.length,
+      pages: Math.ceil(parseInt(count) / limit),
+    };
   }
 
   private serialize(data: Apartments): ApartmentsEntity {
