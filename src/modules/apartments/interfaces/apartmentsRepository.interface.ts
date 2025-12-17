@@ -1,5 +1,5 @@
-import { FiltersDataTableDto } from '../../application/dtos/filtersDataTable.dto';
-import { GetApartmentsTableDto } from '../../application/dtos/getApartmentsTable.dto';
+import { FiltersDataTableDto } from '../dtos/filtersDataTable.dto';
+import { GetApartmentsTableDto } from '../dtos/getApartmentsTable.dto';
 import { ApartmentsEntity } from '../entities/apartments.entity';
 
 export interface IApartmentsRepository {

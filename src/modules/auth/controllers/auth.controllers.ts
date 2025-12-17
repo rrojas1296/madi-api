@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpStatus, Post, Res } from '@nestjs/common';
 import { JwtService } from '../services/jwt.service';
-import { RefreshTokenDto } from '../../application/dtos/refreshToken.dto';
 import { CookieOptions, type Response } from 'express';
+import { RefreshTokenDto } from '../dtos/refreshToken.dto';
 
 @Controller('auth')
 export class AuthController {

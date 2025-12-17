@@ -1,7 +1,7 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import * as jose from 'jose';
 import { JWT_ACCESS_SECRET, JWT_REFRESH_SECRET } from 'src/config/jwt.config';
-import { IPayload } from '../../domain/interfaces/payload.interface';
+import { IPayload } from '../interfaces/payload.interface';
 
 @Injectable()
 export class JwtService {

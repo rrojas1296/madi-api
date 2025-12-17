@@ -1,20 +1,20 @@
 import { Module } from '@nestjs/common';
-import { RegisterController } from './infrastructure/controllers/register.controller';
 import { UsersModule } from '../users/users.module';
-import { RegisterUserUseCase } from './application/use-cases/registerUser.useCase';
-import { JwtService } from './infrastructure/services/jwt.service';
-import { BcryptService } from './infrastructure/services/bcrypt.service';
-import { AuthController } from './infrastructure/controllers/auth.controllers';
-import { ValidateEmailUseCase as ValidateRegisterEmailUC } from './application/use-cases/validateRegisterEmail.useCase';
-import { LoginController } from './infrastructure/controllers/login.controller';
-import { ValidateLoginEmailUC } from './application/use-cases/validateLoginEmail.useCase';
-import { LoginUserUC } from './application/use-cases/loginUser.useCase';
+import { LoginController } from './controllers/login.controller';
+import { AuthController } from './controllers/auth.controllers';
+import { RegisterController } from './controllers/register.controller';
+import { ValidateLoginEmailUseCase } from './use-cases/validateLoginEmail.useCase';
+import { RegisterUserUseCase } from './use-cases/registerUser.useCase';
+import { LoginUserUC } from './use-cases/loginUser.useCase';
+import { JwtService } from './services/jwt.service';
+import { BcryptService } from './services/bcrypt.service';
+import { ValidateRegisterEmailUseCase } from './use-cases/validateRegisterEmail.useCase';
 
 @Module({
   controllers: [RegisterController, AuthController, LoginController],
   providers: [
-    ValidateRegisterEmailUC,
-    ValidateLoginEmailUC,
+    ValidateRegisterEmailUseCase,
+    ValidateLoginEmailUseCase,
     RegisterUserUseCase,
     LoginUserUC,
     JwtService,

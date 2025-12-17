@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { LoginUserDto } from '../dtos/loginUser.dto';
-import { UsersService } from 'src/modules/users/application/users.service';
-import { BcryptService } from '../../infrastructure/services/bcrypt.service';
-import { JwtService } from '../../infrastructure/services/jwt.service';
+import { BcryptService } from '../services/bcrypt.service';
+import { JwtService } from '../services/jwt.service';
+import { UsersService } from 'src/modules/users/services/users.service';
 
 @Injectable()
 export class LoginUserUC {

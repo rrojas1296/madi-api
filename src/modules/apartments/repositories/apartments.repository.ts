@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/infrastructure/prisma/prisma.service';
-import { ApartmentsEntity } from './entities/apartments.entity';
-import { IApartmentsRepository } from './interfaces/apartmentsRepository.interface';
 import { Apartments } from '@prisma/client';
-import { KnexService } from 'src/infrastructure/knex/knex.service';
-import { FiltersDataTableDto } from '../application/dtos/filtersDataTable.dto';
-import { GetApartmentsTableDto } from '../application/dtos/getApartmentsTable.dto';
+import { ApartmentsEntity } from '../entities/apartments.entity';
+import { IApartmentsRepository } from '../interfaces/apartmentsRepository.interface';
+import { GetApartmentsTableDto } from '../dtos/getApartmentsTable.dto';
+import { FiltersDataTableDto } from '../dtos/filtersDataTable.dto';
+import { PrismaService } from 'src/database/prisma/prisma.service';
+import { KnexService } from 'src/database/knex/knex.service';
 
 @Injectable()
 export class ApartmentsRepository implements IApartmentsRepository {
@@ -47,6 +47,7 @@ export class ApartmentsRepository implements IApartmentsRepository {
     } = filters;
 
     const { page, limit, search } = data;
+    console.log({ limit });
     const offset = (page - 1) * limit;
     const totalQuery = this._knexService.client
       .from('Apartments')
@@ -81,7 +82,16 @@ export class ApartmentsRepository implements IApartmentsRepository {
             furnished.split(',').map((i) => i === 'true'),
           );
       })
-      .orderBy('ap.createdAt', 'desc');
+      .orderBy([
+        {
+          column: 'ap.createdAt',
+          order: 'desc',
+        },
+        {
+          column: 'ap.id',
+          order: 'desc',
+        },
+      ]);
     const paginationQuery = baseQuery
       .clone()
       .offset(offset)

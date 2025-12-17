@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateApartmentDto } from '../dtos/createApartments.dto';
-import { ApartmentsRepository } from '../../domain/apartments.repository';
-import { ApartmentsEntity } from '../../domain/entities/apartments.entity';
+import { ApartmentsEntity } from '../entities/apartments.entity';
+import { ApartmentsRepository } from '../repositories/apartments.repository';
 
 @Injectable()
 export class CreateApartmentUseCase {

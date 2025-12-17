@@ -6,7 +6,6 @@ import {
 import { Type } from 'class-transformer';
 import {
   IsString,
-  IsInt,
   IsNumber,
   IsEnum,
   IsBoolean,

@@ -1,14 +1,14 @@
 import { Body, Controller, HttpStatus, Param, Post, Res } from '@nestjs/common';
-import { LoginUserDto } from '../../application/dtos/loginUser.dto';
-import { LoginUserUC } from '../../application/use-cases/loginUser.useCase';
 import { CookieOptions, type Response } from 'express';
-import { ValidateLoginEmailUC } from '../../application/use-cases/validateLoginEmail.useCase';
+import { LoginUserUC } from '../use-cases/loginUser.useCase';
+import { ValidateLoginEmailUseCase } from '../use-cases/validateLoginEmail.useCase';
+import { LoginUserDto } from '../dtos/loginUser.dto';
 
 @Controller('login')
 export class LoginController {
   constructor(
     private readonly _loginUserUseCase: LoginUserUC,
-    private readonly _validateLoginEmail: ValidateLoginEmailUC,
+    private readonly _validateLoginEmail: ValidateLoginEmailUseCase,
   ) {}
   @Post('')
   async loginUser(@Body() data: LoginUserDto, @Res() res: Response) {

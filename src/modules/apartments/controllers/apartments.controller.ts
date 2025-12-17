@@ -1,9 +1,9 @@
 import { Body, Controller, Post, Query } from '@nestjs/common';
-import { CreateApartmentDto } from '../../application/dtos/createApartments.dto';
-import { CreateApartmentUseCase } from '../../application/use-cases/createApartment.useCase';
-import { GetApartmentsTableUseCase } from '../../application/use-cases/getApartmentsTable.useCase';
-import { FiltersDataTableDto } from '../../application/dtos/filtersDataTable.dto';
-import { GetApartmentsTableDto } from '../../application/dtos/getApartmentsTable.dto';
+import { CreateApartmentUseCase } from '../use-cases/createApartment.useCase';
+import { GetApartmentsTableUseCase } from '../use-cases/getApartmentsTable.useCase';
+import { CreateApartmentDto } from '../dtos/createApartments.dto';
+import { GetApartmentsTableDto } from '../dtos/getApartmentsTable.dto';
+import { FiltersDataTableDto } from '../dtos/filtersDataTable.dto';
 
 @Controller('/apartments')
 export class ApartmentsController {

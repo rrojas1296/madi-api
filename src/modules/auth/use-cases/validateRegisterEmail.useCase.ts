@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { UsersService } from 'src/modules/users/application/users.service';
+import { UsersService } from 'src/modules/users/services/users.service';
 
 @Injectable()
-export class ValidateEmailUseCase {
+export class ValidateRegisterEmailUseCase {
   constructor(private readonly _usersService: UsersService) {}
   async execute(email: string) {
     const user = await this._usersService.findUserByEmail(email);

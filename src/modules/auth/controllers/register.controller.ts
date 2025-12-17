@@ -1,13 +1,13 @@
 import { Body, Controller, HttpStatus, Param, Post, Res } from '@nestjs/common';
-import { RegisterUserUseCase } from '../../application/use-cases/registerUser.useCase';
-import { RegisterUserDto } from '../../application/dtos/registerUser.dto';
 import { CookieOptions, type Response } from 'express';
-import { ValidateEmailUseCase } from '../../application/use-cases/validateRegisterEmail.useCase';
+import { ValidateLoginEmailUseCase } from '../use-cases/validateLoginEmail.useCase';
+import { RegisterUserUseCase } from '../use-cases/registerUser.useCase';
+import { RegisterUserDto } from '../dtos/registerUser.dto';
 
 @Controller('register')
 export class RegisterController {
   constructor(
-    private readonly _validateEmailUC: ValidateEmailUseCase,
+    private readonly _validateEmailUC: ValidateLoginEmailUseCase,
     private readonly _registerUserUC: RegisterUserUseCase,
   ) {}
 
