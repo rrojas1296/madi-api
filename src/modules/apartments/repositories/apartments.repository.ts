@@ -14,12 +14,12 @@ export class ApartmentsRepository implements IApartmentsRepository {
     private readonly _knexService: KnexService,
   ) {}
 
-  async create(data: ApartmentsEntity): Promise<string> {
-    const apartment = await this._prismaService.apartments.create({
+  async create(apartment: ApartmentsEntity): Promise<string> {
+    const data = apartment.toJSON();
+    const newApartment = await this._prismaService.apartments.create({
       data,
     });
-    this._knexService.client.insert(data).into('Apartments');
-    return apartment.id;
+    return newApartment.id;
   }
 
   async get(): Promise<ApartmentsEntity[]> {
@@ -47,7 +47,6 @@ export class ApartmentsRepository implements IApartmentsRepository {
     } = filters;
 
     const { page, limit, search } = data;
-    console.log({ limit });
     const offset = (page - 1) * limit;
     const totalQuery = this._knexService.client
       .from('Apartments')
@@ -119,27 +118,11 @@ export class ApartmentsRepository implements IApartmentsRepository {
 
   private serialize(data: Apartments): ApartmentsEntity {
     return new ApartmentsEntity({
-      id: data.id,
-      address: data.address,
+      ...data,
       area: Number(data.area),
-      bathrooms: data.bathrooms,
-      condition: data.condition,
-      currency: data.currency,
-      floor: data.floor,
-      floors: data.floors,
-      furnished: data.furnished,
       garanty: Number(data.garanty),
-      internalCode: data.internalCode,
       monthlyFee: Number(data.monthlyFee),
-      name: data.name,
-      persons: data.persons,
-      pets: data.pets,
-      rooms: data.rooms,
-      status: data.status,
       maintenanceFee: Number(data.maintenanceFee),
-      parking: data.parking,
-      createdAt: data.createdAt,
-      updatedAt: data.updatedAt,
     });
   }
 }
