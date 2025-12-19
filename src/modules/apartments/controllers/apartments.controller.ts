@@ -3,7 +3,6 @@ import { CreateApartmentUseCase } from '../use-cases/createApartment.useCase';
 import { GetApartmentsTableUseCase } from '../use-cases/getApartmentsTable.useCase';
 import { CreateApartmentDto } from '../dtos/createApartments.dto';
 import { GetApartmentsTableDto } from '../dtos/getApartmentsTable.dto';
-import { FiltersDataTableDto } from '../dtos/filtersDataTable.dto';
 
 @Controller('/apartments')
 export class ApartmentsController {
@@ -31,7 +30,7 @@ export class ApartmentsController {
     @Query('furnished') furnished: string,
     @Body() body: GetApartmentsTableDto,
   ) {
-    const filters: FiltersDataTableDto = {
+    const data = await this._getApartmentsTableUseCase.execute(body, {
       status,
       currency,
       monthlyFeeMin,
@@ -42,8 +41,7 @@ export class ApartmentsController {
       areaMax,
       pets,
       furnished,
-    };
-    const data = await this._getApartmentsTableUseCase.execute(body, filters);
+    });
     return { message: 'Data obtained successfully', data };
   }
 }

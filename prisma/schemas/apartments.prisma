@@ -36,6 +36,7 @@ model Apartments {
   garanty        Decimal             @db.Decimal(10, 2)
   currency       ApartmentCurrencies
   maintenanceFee Decimal?            @db.Decimal(10, 2)
+  deleted        Boolean             @default(false)
   createdAt      DateTime            @default(now())
   updatedAt      DateTime            @updatedAt
 }
