@@ -3,17 +3,18 @@ import { CookieOptions, type Response } from 'express';
 import { ValidateLoginEmailUseCase } from '../use-cases/validateLoginEmail.useCase';
 import { RegisterUserUseCase } from '../use-cases/registerUser.useCase';
 import { RegisterUserDto } from '../dtos/registerUser.dto';
+import { ValidateRegisterEmailUseCase } from '../use-cases/validateRegisterEmail.useCase';
 
 @Controller('register')
 export class RegisterController {
   constructor(
-    private readonly _validateEmailUC: ValidateLoginEmailUseCase,
+    private readonly _validateRegisterEmailUC: ValidateRegisterEmailUseCase,
     private readonly _registerUserUC: RegisterUserUseCase,
   ) {}
 
   @Post('validateEmail/:email')
   async validateEmail(@Param('email') email: string) {
-    await this._validateEmailUC.execute(email);
+    await this._validateRegisterEmailUC.execute(email);
     return {
       message: 'Email is free to use',
       status: HttpStatus.OK,

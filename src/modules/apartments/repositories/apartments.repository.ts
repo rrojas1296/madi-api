@@ -29,6 +29,26 @@ export class ApartmentsRepository implements IApartmentsRepository {
     return data.map((i) => this.serialize(i));
   }
 
+  async delete(id: string): Promise<string> {
+    await this._prismaService.apartments.update({
+      where: {
+        id,
+      },
+      data: {
+        deleted: true,
+      },
+    });
+    return id;
+  }
+
+  async deleteMultiple(ids: string[]): Promise<string[]> {
+    await this._knexService
+      .client('Apartments as ap')
+      .update('deleted', true)
+      .whereIn('id', ids);
+    return ids;
+  }
+
   async getDataTable(
     data: GetApartmentsTableDto,
     filters: FiltersDataTableDto,
@@ -51,6 +71,7 @@ export class ApartmentsRepository implements IApartmentsRepository {
     const totalQuery = this._knexService.client
       .from('Apartments')
       .count('* as total')
+      .where('deleted', false)
       .first() as Promise<{ total: string }>;
 
     const baseQuery = this._knexService.client
@@ -81,6 +102,7 @@ export class ApartmentsRepository implements IApartmentsRepository {
             furnished.split(',').map((i) => i === 'true'),
           );
       })
+      .where('ap.deleted', false)
       .orderBy([
         {
           column: 'ap.createdAt',

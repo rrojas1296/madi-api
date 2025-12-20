@@ -1,14 +1,20 @@
-import { Body, Controller, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post, Query } from '@nestjs/common';
 import { CreateApartmentUseCase } from '../use-cases/createApartment.useCase';
 import { GetApartmentsTableUseCase } from '../use-cases/getApartmentsTable.useCase';
 import { CreateApartmentDto } from '../dtos/createApartments.dto';
 import { GetApartmentsTableDto } from '../dtos/getApartmentsTable.dto';
+import { DeleteMultipleApartmentsUseCase } from '../use-cases/deleteMultipleApartments.useCase';
+import { DeleteApartmentUseCase } from '../use-cases/deleteApartment.useCase';
+import { sleep } from 'src/utils/sleep';
+import { DeleteMultipleApartmentsDto } from '../dtos/deleteMultipleApartments.dto';
 
 @Controller('/apartments')
 export class ApartmentsController {
   constructor(
     private readonly _createApartmentUseCase: CreateApartmentUseCase,
     private readonly _getApartmentsTableUseCase: GetApartmentsTableUseCase,
+    private readonly _deleteApartmentUseCase: DeleteApartmentUseCase,
+    private readonly _deleteMultipleApartmentsUseCase: DeleteMultipleApartmentsUseCase,
   ) {}
   @Post()
   async createApartment(@Body() data: CreateApartmentDto) {
@@ -43,5 +49,18 @@ export class ApartmentsController {
       furnished,
     });
     return { message: 'Data obtained successfully', data };
+  }
+
+  @Delete('/:id')
+  async deleteApartment(@Param('id') id: string) {
+    await sleep(2000);
+    const data = await this._deleteApartmentUseCase.execute(id);
+    return { message: 'Apartment deleted successfully', data };
+  }
+
+  @Post('/deleteMultiple')
+  async deleteMultipleApartments(@Body() data: DeleteMultipleApartmentsDto) {
+    const res = await this._deleteMultipleApartmentsUseCase.execute(data.ids);
+    return { message: 'Apartments deleted successfully', data: res };
   }
 }

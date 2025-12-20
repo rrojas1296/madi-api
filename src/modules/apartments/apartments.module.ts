@@ -5,6 +5,8 @@ import { GetApartmentsTableUseCase } from './use-cases/getApartmentsTable.useCas
 import { ApartmentsRepository } from './repositories/apartments.repository';
 import { PrismaModule } from 'src/database/prisma/prisma.module';
 import { KnexModule } from 'src/database/knex/knex.module';
+import { DeleteApartmentUseCase } from './use-cases/deleteApartment.useCase';
+import { DeleteMultipleApartmentsUseCase } from './use-cases/deleteMultipleApartments.useCase';
 
 @Module({
   controllers: [ApartmentsController],
@@ -12,6 +14,8 @@ import { KnexModule } from 'src/database/knex/knex.module';
     CreateApartmentUseCase,
     GetApartmentsTableUseCase,
     ApartmentsRepository,
+    DeleteApartmentUseCase,
+    DeleteMultipleApartmentsUseCase,
   ],
   imports: [PrismaModule, KnexModule],
 })
