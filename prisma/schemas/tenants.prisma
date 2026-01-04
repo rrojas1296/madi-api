@@ -1,6 +1,32 @@
-model Tenant {
-  id        String   @id @default(cuid())
-  name      String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+enum DocumentType {
+  DNI
+  PASSPORT
+  CE
+}
+
+enum Nationality {
+  PERU
+  CHILE
+  ARGENTINA
+  OTHER
+}
+
+model Tenants {
+  id             String       @id @default(uuid())
+  name           String
+  lastName       String
+  primaryPhone   String
+  emergencyPhone String?
+  email          String       @unique
+  documentType   DocumentType
+  numberDocument String
+  nationality    Nationality
+  birthDate      DateTime
+  entryDate      DateTime
+  outDate        DateTime?
+  paymentDay     Int
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+  apartments     Apartments?  @relation(fields: [apartmentsId], references: [id])
+  apartmentsId   String?
 }

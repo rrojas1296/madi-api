@@ -29,6 +29,13 @@ export class ApartmentsRepository implements IApartmentsRepository {
     return data.map((i) => this.serialize(i));
   }
 
+  async getList() {
+    const data: { id: string; name: string }[] = await this._knexService.client
+      .select('name', 'id')
+      .from('Apartments');
+    return data;
+  }
+
   async delete(id: string): Promise<string> {
     await this._prismaService.apartments.update({
       where: {

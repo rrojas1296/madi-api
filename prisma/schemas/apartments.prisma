@@ -29,6 +29,7 @@ model Apartments {
   rooms          Int
   bathrooms      Int
   floors         Int
+  tenants        Tenants[]
   condition      ApartmentCondition
   furnished      Boolean             @default(false)
   pets           Boolean             @default(false)

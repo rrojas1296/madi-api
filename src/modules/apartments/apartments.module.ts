@@ -7,6 +7,7 @@ import { PrismaModule } from 'src/database/prisma/prisma.module';
 import { KnexModule } from 'src/database/knex/knex.module';
 import { DeleteApartmentUseCase } from './use-cases/deleteApartment.useCase';
 import { DeleteMultipleApartmentsUseCase } from './use-cases/deleteMultipleApartments.useCase';
+import { GetApartmentsListUseCase } from './use-cases/getApartmentsList.useCase';
 
 @Module({
   controllers: [ApartmentsController],
@@ -16,6 +17,7 @@ import { DeleteMultipleApartmentsUseCase } from './use-cases/deleteMultipleApart
     ApartmentsRepository,
     DeleteApartmentUseCase,
     DeleteMultipleApartmentsUseCase,
+    GetApartmentsListUseCase,
   ],
   imports: [PrismaModule, KnexModule],
 })
