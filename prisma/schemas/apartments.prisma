@@ -28,6 +28,7 @@ model Apartments {
   persons        Int
   rooms          Int
   bathrooms      Int
+  ownerId        String
   floors         Int
   tenants        Tenants[]
   condition      ApartmentCondition

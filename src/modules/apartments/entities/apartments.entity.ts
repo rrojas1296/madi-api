@@ -24,6 +24,7 @@ export interface ApartmentsProps {
   monthlyFee: number | Decimal;
   garanty: number | Decimal;
   currency: ApartmentCurrencies;
+  ownerId: string;
   maintenanceFee?: number | null | Decimal;
   createdAt?: Date | string;
   updatedAt?: Date | string;

@@ -29,10 +29,12 @@ export class ApartmentsRepository implements IApartmentsRepository {
     return data.map((i) => this.serialize(i));
   }
 
-  async getList() {
+  async getList(userId: string) {
     const data: { id: string; name: string }[] = await this._knexService.client
       .select('name', 'id')
-      .from('Apartments');
+      .from('Apartments')
+      .where('ownerId', userId)
+      .where('deleted', false);
     return data;
   }
 
@@ -59,6 +61,7 @@ export class ApartmentsRepository implements IApartmentsRepository {
   async getDataTable(
     data: GetApartmentsTableDto,
     filters: FiltersDataTableDto,
+    userId: string,
   ) {
     const {
       monthlyFeeMax,
@@ -79,6 +82,7 @@ export class ApartmentsRepository implements IApartmentsRepository {
       .from('Apartments')
       .count('* as total')
       .where('deleted', false)
+      .where('ownerId', userId)
       .first() as Promise<{ total: string }>;
 
     const baseQuery = this._knexService.client
@@ -110,6 +114,7 @@ export class ApartmentsRepository implements IApartmentsRepository {
           );
       })
       .where('ap.deleted', false)
+      .where('ap.ownerId', userId)
       .orderBy([
         {
           column: 'ap.createdAt',

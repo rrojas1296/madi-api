@@ -7,6 +7,7 @@ export interface IApartmentsRepository {
   getDataTable(
     data: GetApartmentsTableDto,
     filters: FiltersDataTableDto,
+    userId: string,
   ): Promise<{
     apartments: ApartmentsEntity[];
     totalRequest: number;

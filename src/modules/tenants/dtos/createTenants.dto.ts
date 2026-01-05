@@ -53,7 +53,7 @@ export class CreateTenantDto {
   outDate?: string; // ISO string → mapped to Date in service
 
   @IsUUID()
-  apartment: string;
+  apartmentId: string;
 
   @IsInt()
   @Min(1)

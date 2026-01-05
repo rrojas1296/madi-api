@@ -14,8 +14,10 @@ interface TenantProps {
   birthDate: string;
   entryDate: string;
   outDate?: string;
+  ownerId: string;
   createdAt?: Date | string;
   updatedAt?: Date | string;
+  apartmentId?: string;
 }
 
 export class TenantEntity {

@@ -7,8 +7,12 @@ import { TenantEntity } from '../entities/tenant.entity';
 export class TenantsService {
   constructor(private readonly _tenantsRepository: TenantsRepository) {}
 
-  createTenant(data: CreateTenantDto) {
-    const tenant = new TenantEntity(data);
-    this._tenantsRepository.create(tenant);
+  createTenant(data: CreateTenantDto, userId: string) {
+    const tenant = new TenantEntity({ ...data, ownerId: userId });
+    return this._tenantsRepository.create(tenant);
+  }
+
+  getTenantsList(userId: string) {
+    return this._tenantsRepository.getList(userId);
   }
 }

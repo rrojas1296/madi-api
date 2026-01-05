@@ -22,11 +22,12 @@ model Tenants {
   numberDocument String
   nationality    Nationality
   birthDate      DateTime
+  ownerId        String
   entryDate      DateTime
   outDate        DateTime?
   paymentDay     Int
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
-  apartments     Apartments?  @relation(fields: [apartmentsId], references: [id])
-  apartmentsId   String?
+  apartments     Apartments?  @relation(fields: [apartmentId], references: [id])
+  apartmentId   String?
 }
