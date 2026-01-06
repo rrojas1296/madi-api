@@ -30,4 +30,5 @@ model Tenants {
   updatedAt      DateTime     @updatedAt
   apartments     Apartments?  @relation(fields: [apartmentId], references: [id])
   apartmentId   String?
+  deleted        Boolean      @default(false)
 }

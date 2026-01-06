@@ -55,7 +55,15 @@ export class TenantsRepository implements ITenantsRepository {
       .first() as Promise<{ total: string }>;
 
     const baseQuery = this._knexService.client
-      .select('t.*', 'a.id as apartment_id', 'a.name as apartment_name')
+      .select(
+        't.*',
+        this._knexService.client.raw(`
+        json_build_object(
+          'id', a.id,
+          'name', a.name
+        ) as apartment
+      `),
+      )
       .from('Tenants as t')
       .leftJoin('Apartments as a', 't.apartmentId', 'a.id')
       .modify((qb) => {
@@ -95,7 +103,7 @@ export class TenantsRepository implements ITenantsRepository {
       .clone()
       .offset(offset)
       .limit(limit) as Promise<
-      (Tenants & { apartment_id?: string; apartment_name?: string })[]
+      (Tenants & { apartment: { id: string; name: string } | null })[]
     >;
 
     const pagesQuery = baseQuery
@@ -122,7 +130,7 @@ export class TenantsRepository implements ITenantsRepository {
   }
 
   private serialize(
-    data: Tenants & { apartment_id?: string; apartment_name?: string },
+    data: Tenants & { apartment: { id: string; name: string } | null },
   ) {
     const entity = new TenantEntity({
       ...data,
@@ -135,9 +143,7 @@ export class TenantsRepository implements ITenantsRepository {
 
     return {
       ...entity.toJSON(),
-      apartment: data.apartment_id
-        ? { id: data.apartment_id, name: data.apartment_name }
-        : null,
+      apartment: data.apartment,
     };
   }
 }
